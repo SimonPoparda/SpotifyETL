@@ -3,6 +3,8 @@ This project focuses on performing ETL on Spotify data
 
 The project leverages Python, PostgreSQL, Docker and Apache Airflow to extract data from Spotify APIs, transform data and load it onto PostreSQL database, as well as to orchestrate the pipeline.
 
+![icons](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/b83296f1-1168-4537-8926-f38d0271493e)
+
 
 <details>
   <summary>Table of Contents</summary>
@@ -41,9 +43,11 @@ The data used for this project was my private Spotify user data. I wanted to ext
 
 To get extract my data I opened Spotify documentation
 
+
 ![apis](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/5bcad962-fbb7-4f2b-8590-4f6d7b5f72eb)
 
 I had to create an app in Spotify UI
+
 
 ![apis2](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/ed6b853b-919b-4222-ae7b-48c5ea142ed1)
 
@@ -327,33 +331,52 @@ services:
       - "8080:8080"
     command: airflow standalone
 ```
+
 ![docker](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/327c0920-5cb0-4f5f-81bc-9d47102b07d8)
+
 
 ![docker2](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/22b608d6-0525-44c5-a840-22f1ac295e0d)
 
+
 New directory called 'airflow' appeared and I also created new folder called dags
+
 
 ![docker3](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/ad89bacc-b7bb-489d-b212-d4941e51cf5f)
 
+
 Next, I opened AirFlow UI using Docker
+
 
 ![docker4](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/abf506e5-35dd-4435-a6ea-30b17dc82e7a)
 
+
 ![image](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/7d54e81e-2695-4412-89cf-1d7376b23e04)
 
+
 For now there was no DAGs available, so I created new one inside my dags folder
+
+
 ![airflow3](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/351e217a-2a1c-41f4-b831-dab54629bbbe)
+
 
 ![airflow2](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/0e6f7655-e693-491e-a59c-695eca307faf)
 
+
 And it resulted in the following pipeline, which I can now run daily to get my private Spotify data that I can analyze:
+
 
 ![airflow](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/80b95dbf-55e3-47b2-8764-b581e5a11b67)
 
 
 -----------------------------------------------------------------------------------------
 ## Summary
-Transforming a relational data model into a Star Schema offers significant advantages for analytics and data warehousing purposes. By organizing data into dimension and fact tables, queries can be executed more efficiently, leading to faster insights and improved decision-making.
+The Spotify ETL project is focused on extracting, transforming, and loading (ETL) data from Spotify APIs into a PostgreSQL database using Python, Docker, and Apache Airflow.
+
+Project begins by obtaining an access token from Spotify's API. This token is then used to retrieve information about the playlists, including the names and IDs of each playlist. Subsequently, the project extracts the tracks from each playlist and transforms the data into a structured format.
+
+The transformation process involves checking for data validity, converting the duration of songs from milliseconds to a more human-readable format (hours:minutes:seconds), and removing unnecessary columns. Finally, the transformed data is loaded into a PostgreSQL database.
+
+The orchestration of the ETL pipeline is managed using Apache Airflow, which allows for scheduling and monitoring of tasks. Docker is used to containerize the Airflow environment, ensuring consistency and portability across different systems.
 
 ## Authors
 
