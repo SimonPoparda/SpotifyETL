@@ -11,13 +11,13 @@ The project leverages Python, PostgreSQL, Docker and Apache Airflow to extract d
       <a href="#data-source">Data Source</a>
       <a href="#execution">Execution</a>
       <ul>
-        <li><a href="#creating-tables">Creating Tables</a></li>
+        <li><a href="#extracting-data-from-apis">Extracting Data from APIs</a></li>
       </ul>
       <ul>
-        <li><a href="#inserting-the-data">Inserting the Data</a></li>
+        <li><a href="#transform">Transform</a></li>
       </ul>
       <ul>
-        <li><a href="#analysis-and-time-comparison">Analysis and time comparison</a></li>
+        <li><a href="#load">Load</a></li>
       </ul>
     </li>
       <a href="#summary">Summary</a>
@@ -27,7 +27,7 @@ The project leverages Python, PostgreSQL, Docker and Apache Airflow to extract d
   
 </details> 
 
-![postgresql 248x256](https://github.com/SimonPoparda/DataWarehousing-dvdrental/assets/108056198/f78f268b-030a-416d-89a5-a1dd6aa6684c)
+
 
 -----------------------------------------------------------------------------------------
 
