@@ -41,17 +41,17 @@ The data used for this project was my private Spotify user data. I wanted to ext
 ## Execution
 ### Extracting Data from APIs
 
-To get extract my data I opened Spotify documentation
+In order to start extractiing my data I opened Spotify documentation
 
 
 ![apis](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/5bcad962-fbb7-4f2b-8590-4f6d7b5f72eb)
 
-I had to create an app in Spotify UI
+I had to create an dedicated app in the Spotify UI
 
 
 ![apis2](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/ed6b853b-919b-4222-ae7b-48c5ea142ed1)
 
-I also had to get a authentication token. In order to do so I wrote some code basing on Spotify docs
+I also had to get an authentication token. In order to do so I wrote some code basing on Spotify documentation
 
 ```py
 import requests
@@ -89,7 +89,7 @@ else:
 
 ```
 
-After getting my token I requested information about my playlists, which came in JSON format
+After getting my token I requested information about my playlists, which came in a JSON format
 
 ```py
 url = f'https://api.spotify.com/v1/users/{username}/playlists'
@@ -147,7 +147,7 @@ for url in playlists_urls:
         print("Error:", response.status_code, response.reason)
 ```
 
-I also extracted them from JSON to dataframe
+I also extracted them from a JSON to a dataframe
 ```py
 headers = {
     'Authorization': 'Bearer ' + access_token
@@ -168,7 +168,7 @@ for url in playlists_urls:
         print("Error:", response.status_code, response.reason)
 ```
 
-After that, I decided to my data into dictionary with playlist names as keys and dataframes as values
+After that, I decided to put my data into dictionary with playlist names as keys and dataframes as values
 ```py
 playlist_names = playlists['name']
 
@@ -187,6 +187,7 @@ for i in range(len(playlist_names)):
 ```
 
 ### Transform 
+I checked if my dataframe is not empty and if there are any NULL values. I also changed format of duration_ms, as well as drop unnecessary columns.
 ```py
 def check_if_valid_data(data):
     # Check if df is empty
@@ -215,44 +216,15 @@ for i in playlist_names:
 ```
 
 ### Load
-I established connection with my PostgreSQL database
+I established connection with my local PostgreSQL database
 ```py
-# Defining database connection parameters
+# Defining connection with a database
 db_params = {
     "host": ,
     "database": ,
     "user": ,
     "password": ,
     "port": 
-}
-
-try:
-    conn = psycopg2.connect(**db_params)
-except psycopg2.Error as e:
-    print("Error: Could not make connection to the Postgres database")
-    print(e)
-```
-
-```py
-#create a database
-try:
-    cur.execute("CREATE DATABASE Spotify_ETL;")
-except psycopg2.Error as e:
-    print("Error: ")
-    print(e)
-
-cur.close()
-conn.close()
-```
-
-```py
-# Defining connection with new database
-db_params = {
-    "host": "localhost",
-    "database": "spotify_etl",
-    "user": "postgres",
-    "password": "kielbasa123",
-    "port": "5432"
 }
 
 
@@ -273,6 +245,8 @@ except psycopg2.Error as e:
 conn.autocommit = True
 ```
 
+I also created tables mirroring my data
+
 ```py
 #creating tables
 
@@ -287,6 +261,8 @@ for i in playlist_names:
 
     cur.execute(sql_query)
 ```
+
+And inserting the values into them
 
 ```py
 #inserting the data
@@ -306,7 +282,9 @@ for i in playlist_names:
 ```
 
 ### Orchestration
-I created two docker files to initialize my image, as well as container
+My Spotify playlists are constantly updated, so I wanted to run my pipeline daily
+
+To do so, I created two docker files to initialize my image, as well as container
 
 ```dockerfile
 FROM apache/airflow:latest
@@ -353,7 +331,7 @@ Next, I opened AirFlow UI using Docker
 ![image](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/7d54e81e-2695-4412-89cf-1d7376b23e04)
 
 
-For now there was no DAGs available, so I created new one inside my dags folder
+For now there was no DAG available, so I created new one
 
 
 ![airflow3](https://github.com/SimonPoparda/SpotifyETL/assets/108056198/351e217a-2a1c-41f4-b831-dab54629bbbe)
